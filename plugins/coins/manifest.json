@@ -69,7 +69,14 @@
 				"description": "Minutes of inactivity after which a user is considered idle/lurking.",
 				"default": 10,
 				"type": "number"
-			}			
+			},
+			"idleDropValue": {
+				"name": "Idle Drop Value",
+				"category": "Idlers/Lurkers",
+				"description": "Value of a single coin drop for idlers/lurkers.",
+				"default": 10,
+				"type": "number"
+			}
 		}
 	}
 }

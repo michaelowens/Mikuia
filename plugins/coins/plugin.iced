@@ -36,6 +36,7 @@ updateCoins = () =>
 					Channel.getSetting 'coins', 'dropValue', defer error, dropValue
 					Channel.getSetting 'coins', 'idleTime', defer error, idleTime
 					Channel.getSetting 'coins', 'rewardIdlers', defer error, rewardIdlers
+					Channel.getSetting 'coins', 'idleDropValue', defer error, idleDropValue
 
 				dropTimer[stream] ?= 0
 				dropTimer[stream]++
@@ -51,16 +52,13 @@ updateCoins = () =>
 						Viewer = new Mikuia.Models.Channel viewer
 						goAhead = true
 
-						if not rewardIdlers
-							if chatActivity[viewer]?[stream]?
-								if chatActivity[viewer][stream] == 0
-									goAhead = false
-							else
-								goAhead = false
+						idle = not chatActivity[viewer]?[stream] > 0
+						if not rewardIdlers and idle
+							goAhead = false
 
 						await Viewer.isBot defer error, isBot
 						if goAhead and not isBot and viewer isnt stream
-							coinAmount = dropValue
+							coinAmount = if idle then idleDropValue else dropValue
 							if Math.round(Math.random() * 100) < dropChance
 								await
 									Mikuia.Database.zincrby 'channel:' + stream + ':coins', coinAmount, viewer, defer whatever
@@ -75,7 +73,7 @@ updateCoins = () =>
 	for viewerName, viewer of chatActivity
 		for streamName, idleTime of viewer
 			if chatActivity[viewerName][streamName] > 0
-				chatActivity[viewerName][streamName]-- 
+				chatActivity[viewerName][streamName]--
 
 setInterval updateCoins, 60000
 
@@ -85,7 +83,7 @@ showBalance = (data) =>
 	await
 		Channel.isSupporter defer error, isSupporter
 		Mikuia.Database.zscore 'channel:' + data.to.replace('#', '') + ':coins', data.user.username, defer error, coinBalance
-		
+
 	if !error and isSupporter
 		Channel = new Mikuia.Models.Channel data.to
 		Viewer = new Mikuia.Models.Channel data.user.username
@@ -118,7 +116,7 @@ Mikuia.Events.on 'coins.command', (data) =>
 				if data.tokens.length == 4 && data.user.username == data.to.replace('#', '')
 					username = data.tokens[2]
 					coinAmount = data.tokens[3]
-					
+
 					Channel = new Mikuia.Models.Channel data.to
 					Viewer = new Mikuia.Models.Channel username
 
@@ -158,7 +156,7 @@ Mikuia.Events.on 'coins.command', (data) =>
 						Channel = new Mikuia.Models.Channel data.to
 						Recipient = new Mikuia.Models.Channel username
 						Sender = new Mikuia.Models.Channel data.user.username
-						
+
 						await
 							Channel.getSetting 'coins', 'name', defer error, name
 							Channel.getSetting 'coins', 'namePlural', defer error, namePlural
