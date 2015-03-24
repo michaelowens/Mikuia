@@ -52,7 +52,7 @@ updateCoins = () =>
 						Viewer = new Mikuia.Models.Channel viewer
 						goAhead = true
 
-						idle = not chatActivity[viewer]?[stream] > 0
+						idle = not (chatActivity[viewer]?[stream] > 0)
 						if not rewardIdlers and idle
 							goAhead = false
 
