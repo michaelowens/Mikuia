@@ -3,8 +3,7 @@ fs = require 'fs'
 path = require 'path'
 
 class exports.Plugin
-	constructor: (Mikuia) ->
-		@Mikuia = Mikuia
+	constructor: (@Mikuia) ->
 		@handlers = {}
 		@plugins = {}
 

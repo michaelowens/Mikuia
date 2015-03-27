@@ -1,9 +1,8 @@
 class exports.Leaderboard extends Mikuia.Model
-	constructor: (name) ->
+	constructor: (@name) ->
 		@model = 'leaderboard'
-		@name = name
 
-		Mikuia.Element.register 'leaderboards', name
+		Mikuia.Element.register 'leaderboards', @name
 
 	getName: -> @name
 
@@ -53,7 +52,7 @@ class exports.Leaderboard extends Mikuia.Model
 		await @setInfo 'reverseOrder', order, defer err, data
 		if callback
 			callback err, data
-		
+
 	# Scores
 
 	getScore: (channel, callback) ->

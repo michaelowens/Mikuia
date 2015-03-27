@@ -2,8 +2,7 @@ request = require 'request'
 twitchy = require 'twitchy'
 
 class exports.Twitch
-	constructor: (Mikuia) ->
-		@Mikuia = Mikuia
+	constructor: (@Mikuia) ->
 
 	init: ->
 		if @Mikuia.settings.twitch.key != 'TWITCH_API_KEY' && @Mikuia.settings.twitch.secret != 'TWITCH_API_SECRET'

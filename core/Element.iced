@@ -1,6 +1,5 @@
 class exports.Element
-	constructor: (Mikuia) ->
-		@Mikuia = Mikuia
+	constructor: (@Mikuia) ->
 		@elements = {}
 
 	getAll: (key) -> @elements[key]
@@ -17,7 +16,7 @@ class exports.Element
 					title: panel.title,
 					content: response
 
-		callback results			
+		callback results
 
 	register: (key, name) ->
 		if !@elements[key]

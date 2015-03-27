@@ -15,8 +15,7 @@ class exports.Channel extends Mikuia.Model
 
 	getName: -> @name
 
-	isAdmin: ->
-		return Mikuia.settings.bot.admins.indexOf(@getName()) > -1
+	isAdmin: -> Mikuia.settings.bot.admins.indexOf(@getName()) > -1
 
 	isBot: (callback) ->
 		await Mikuia.Database.sismember 'mikuia:bots', @getName(), defer err, data
@@ -315,8 +314,7 @@ class exports.Channel extends Mikuia.Model
 		sortable = []
 		for channel, experience of data
 			sortable.push [channel, experience]
-		sortable.sort (a,b) ->
-			return b[1] - a[1]
+		sortable.sort (a,b) -> b[1] - a[1]
 
 		callback err, sortable
 
@@ -356,10 +354,7 @@ class exports.Channel extends Mikuia.Model
 
 	isDonator: (callback) ->
 		await Mikuia.Database.zscore 'mikuia:donators', @getName(), defer err, data
-		if data? && data >= 10
-			callback err, true
-		else
-			callback err, false
+		callback err, (data? && data >= 10)
 
 	isSupporter: (callback) ->
 		await @getSupporterStatus defer err, data

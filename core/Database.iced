@@ -2,8 +2,7 @@ cli = require 'cli-color'
 redis = require 'redis'
 
 class exports.Database
-	constructor: (Mikuia) ->
-		@Mikuia = Mikuia
+	constructor: (@Mikuia) ->
 
 	connect: (host, port, options) ->
 		@Mikuia.Log.info cli.redBright('Redis') + ' / ' + cli.whiteBright('Attempting to connect with the server at ' + host + ':' + port + '...')

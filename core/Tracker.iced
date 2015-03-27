@@ -1,6 +1,5 @@
 class exports.Tracker
-	constructor: (Mikuia) ->
-		@Mikuia = Mikuia
+	constructor: (@Mikuia) ->
 
 	_lb: (model, name, key, value, callback) ->
 		if model == 'channel'

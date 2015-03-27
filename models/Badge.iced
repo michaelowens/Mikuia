@@ -1,7 +1,6 @@
 class exports.Badge extends Mikuia.Model
-	constructor: (name) ->
+	constructor: (@name) ->
 		@model = 'badge'
-		@name = name
 
 	exists: (callback) ->
 		await @_exists '', defer err, data
@@ -27,8 +26,7 @@ class exports.Badge extends Mikuia.Model
 		await @_smembers 'members', defer err, data
 		callback err, data
 
-	getName: (callback) ->
-		return @name
+	getName: (callback) -> @name
 
 	setDescription: (display, callback) ->
 		await @setInfo 'description', description, defer err, data

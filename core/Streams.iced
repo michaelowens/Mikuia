@@ -1,6 +1,5 @@
 class exports.Streams
-	constructor: (Mikuia) ->
-		@Mikuia = Mikuia
+	constructor: (@Mikuia) ->
 
 	get: (stream, callback) ->
 		await Mikuia.Database.hgetall 'mikuia:stream:' + stream, defer err, stream
